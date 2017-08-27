@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="PHP Loadbalancer" default="build">
+    <autoloader autoloaderpath="${project.basedir}/vendor/autoload.php"/>
+    <property name="dir.src" value="${project.basedir}/src"/>
+    <mkdir dir="${project.basedir}/build"/>
+    <target name="lint" description="PHP lint check.">
+        <phplint haltonfailure="true" deprecatedAsError="true">
+            <fileset dir="${dir.src}">
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+    </target>
+    <target name="style" description="PHPCS checker">
+        <exec command="bin/phpcs --extensions=php -n --standard=PSR2 --report=full src" logoutput="true" checkreturn="true"/>
+    </target>
+    <target name="phpunit">
+        <exec command="bin/phpunit" logoutput="true" checkreturn="true"/>
+    </target>
+    <target name="build">
+        <phingcall target="lint"/>
+        <phingcall target="style"/>
+        <phingcall target="phpunit"/>
+    </target>
+</project>
