@@ -1,0 +1,15 @@
+language: php
+
+php:
+  - 7.0
+  - 7.1
+
+before_script:
+  - composer install
+
+script:
+  - ./bin/phpunit --coverage-clover=coverage.clover
+  - ./bin/phpcs --extensions=php -n --standard=PSR2 --report=full src
+
+notifications:
+  email: "kisztof@gmail.com"
