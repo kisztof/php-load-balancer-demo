@@ -27,17 +27,23 @@ class Host implements HostInterface, \JsonSerializable
      * @var string
      */
     private $address;
+    /**
+     * @var Configuration
+     */
+    private $configuration;
 
     /**
      * Host constructor.
      *
      * @param string        $id
      * @param string        $address
+     * @param Configuration $configuration
      */
-    public function __construct(string $id, string $address)
+    public function __construct(string $id, string $address, Configuration $configuration)
     {
         $this->id = $id;
         $this->address = $address;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -61,7 +67,15 @@ class Host implements HostInterface, \JsonSerializable
      */
     public function getLoad(): float
     {
-        return 1.0;
+        return $this->configuration->getLoad();
+    }
+
+    /**
+     * @return Configuration
+     */
+    public function getConfiguration(): Configuration
+    {
+        return $this->configuration;
     }
 
     /**
